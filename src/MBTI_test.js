@@ -11,7 +11,7 @@ function MBTI_test() {
 
     async function handleMbtiButtonClick() {
         // 성격묘사를 ChatGPT API에 전송하여 MBTI 유형 예측
-        try{
+        try {
             const mbtiApiResponse = await fetch('https://api.openai.com/v1/completions', {
                 method: 'POST',
                 headers: {
@@ -26,15 +26,14 @@ function MBTI_test() {
                                  `,
 
                         model: OPENAI_MODEL,
-                        max_tokens:2048,
+                        max_tokens: 2048,
                     }
                 ),
             })
             const mbtiApiResponseJson = await mbtiApiResponse.json()
-            console.log(JSON.parse(mbtiApiResponseJson.choices[0].text))
 
             // 예측된 MBTI 코드에 해당하는 결과와 설명
-            const { code, desc,  } = JSON.parse(mbtiApiResponseJson.choices[0].text)
+            const { code, desc, } = JSON.parse(mbtiApiResponseJson.choices[0].text)
             if (desc) {
                 setMbti(code)
                 setResult(`${desc}`)
@@ -43,19 +42,19 @@ function MBTI_test() {
                 setResult('알 수 없는 유형입니다 😕')
             }
 
-        }catch(e){
+        } catch (e) {
             console.log(e)
         }
 
     }
 
     return (
-        <div style={{marginLeft: '20px'}}>
+        <div style={{ marginLeft: '20px' }}>
             <h1>MBTI 유형 예측기</h1>
             <div>
                 <label htmlFor="personalityInput">성격 : </label>
                 <input
-                    style={{width:"1000px",}}
+                    style={{ width: "1000px", }}
                     type="text"
                     id="personalityInput"
                     value={personalityInput}
@@ -63,10 +62,10 @@ function MBTI_test() {
                 />
             </div>
             <div>
-                <button style={{margin:'10px'}} onClick={handleMbtiButtonClick}>MBTI 확인</button>
+                <button style={{ margin: '10px' }} onClick={handleMbtiButtonClick}>MBTI 확인</button>
             </div>
-            <div style={{width: '800px', height:'800px', overflow:'auto', margin:'10px'}}>
-                {mbti && <div style={{fontSize: '30px', marginBottom:'10px' }} > {mbti}</div>}
+            <div style={{ width: '800px', height: '800px', overflow: 'auto', margin: '10px' }}>
+                {mbti && <div style={{ fontSize: '30px', marginBottom: '10px' }} > {mbti}</div>}
                 {result && <div style={{}} >{result}</div>}
             </div>
 
